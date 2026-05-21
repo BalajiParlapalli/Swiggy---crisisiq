@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CrisisIQ — Swiggy Builders Club</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --orange:#FC6011;--orange-dim:#FF8A47;
+  --dark:#0A0A0A;--dark2:#111;--dark3:#1A1A1A;
+  --border:rgba(255,255,255,0.08);--text:#F0EFEB;--muted:rgba(240,239,235,0.45);
+  --green:#2ECC71;--amber:#F0A500;--red:#E74C3C;--blue:#3B8BD4;--teal:#1D9E75;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'DM Sans',sans-serif;background:var(--dark);color:var(--text);overflow-x:hidden;}
+h1,h2,h3,h4,.nav-logo{font-family:'Syne',sans-serif;}
+
+nav{position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:16px 40px;background:rgba(10,10,10,0.95);backdrop-filter:blur(12px);border-bottom:0.5px solid var(--border);}
+.nav-logo{font-size:18px;font-weight:800;letter-spacing:-0.5px;display:flex;align-items:center;gap:10px;}
+.nav-logo span{color:var(--orange);}
+.nav-chip{font-size:11px;font-weight:500;background:rgba(252,96,17,0.12);color:var(--orange-dim);border:0.5px solid rgba(252,96,17,0.3);border-radius:20px;padding:3px 10px;}
+nav .links{display:flex;gap:28px;}
+nav .links a{font-size:13px;color:var(--muted);text-decoration:none;transition:color 0.2s;}
+nav .links a:hover{color:var(--text);}
+.nav-cta{font-size:13px;font-weight:500;background:var(--orange);color:#fff;border:none;border-radius:8px;padding:8px 18px;cursor:pointer;text-decoration:none;}
+
+.hero{padding:90px 40px 70px;max-width:900px;margin:0 auto;text-align:center;}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:500;letter-spacing:1px;color:var(--orange-dim);background:rgba(252,96,17,0.08);border:0.5px solid rgba(252,96,17,0.2);border-radius:20px;padding:5px 14px;margin-bottom:32px;text-transform:uppercase;}
+.hero h1{font-size:clamp(34px,6vw,62px);font-weight:800;line-height:1.06;letter-spacing:-2px;margin-bottom:24px;}
+.hero h1 em{font-style:normal;color:var(--orange);}
+.hero p{font-size:16px;line-height:1.75;color:var(--muted);max-width:580px;margin:0 auto 40px;}
+.hero-stats{display:flex;justify-content:center;gap:48px;border-top:0.5px solid var(--border);border-bottom:0.5px solid var(--border);padding:26px 0;}
+.hero-stat .num{font-family:'Syne',sans-serif;font-size:24px;font-weight:700;color:var(--orange);}
+.hero-stat .label{font-size:11px;color:var(--muted);margin-top:4px;}
+
+section{max-width:1000px;margin:0 auto;padding:80px 40px;}
+.section-label{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--orange-dim);font-weight:500;margin-bottom:12px;}
+.section-title{font-size:clamp(22px,4vw,34px);font-weight:700;letter-spacing:-1px;margin-bottom:16px;line-height:1.15;}
+.section-sub{font-size:14px;color:var(--muted);line-height:1.7;max-width:560px;margin-bottom:48px;}
+.sep{height:0.5px;background:var(--border);margin:0 40px;}
+
+/* CRISIS */
+.crisis-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.crisis-card{background:var(--dark2);border:0.5px solid var(--border);border-radius:14px;padding:22px;}
+.crisis-icon{font-size:26px;margin-bottom:10px;}
+.crisis-card h3{font-family:'Syne',sans-serif;font-size:14px;font-weight:700;margin-bottom:6px;}
+.crisis-card p{font-size:12px;color:var(--muted);line-height:1.65;}
+
+/* MODULES */
+.module-card{background:var(--dark2);border:0.5px solid var(--border);border-radius:16px;margin-bottom:14px;overflow:hidden;transition:border-color 0.3s;}
+.module-card:hover{border-color:rgba(252,96,17,0.3);}
+.module-header{display:flex;align-items:flex-start;gap:18px;padding:26px 30px;}
+.module-num{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-size:15px;font-weight:700;flex-shrink:0;}
+.m1 .module-num{background:rgba(30,158,117,0.15);color:var(--teal);}
+.m2 .module-num{background:rgba(252,96,17,0.12);color:var(--orange-dim);}
+.m3 .module-num{background:rgba(59,139,212,0.12);color:var(--blue);}
+.module-title{font-size:17px;font-weight:700;margin-bottom:4px;letter-spacing:-0.3px;}
+.module-desc{font-size:12px;color:var(--muted);line-height:1.55;}
+.module-tags{display:flex;gap:6px;margin-top:10px;flex-wrap:wrap;}
+.tag{font-size:11px;font-weight:500;border-radius:6px;padding:3px 8px;}
+.tag-rider{background:rgba(30,158,117,0.12);color:#5DCAA5;}
+.tag-customer{background:rgba(59,139,212,0.1);color:#85B7EB;}
+.tag-restaurant{background:rgba(252,96,17,0.1);color:var(--orange-dim);}
+.module-body{padding:0 30px 26px 86px;}
+.feature-list{list-style:none;}
+.feature-list li{font-size:12px;color:var(--muted);line-height:1.65;padding:8px 0;border-bottom:0.5px solid var(--border);display:flex;gap:10px;align-items:flex-start;}
+.feature-list li:last-child{border-bottom:none;}
+.feature-list li::before{content:"→";color:var(--orange-dim);flex-shrink:0;margin-top:1px;}
+
+/* COMPLIANCE BANNER — inline warning in demo */
+.compliance-banner{background:rgba(30,158,117,0.06);border:0.5px solid rgba(30,158,117,0.2);border-radius:10px;padding:11px 14px;font-size:11px;color:#5DCAA5;line-height:1.6;margin-bottom:16px;}
+
+/* DEMO */
+.demo-wrap{background:var(--dark2);border:0.5px solid var(--border);border-radius:20px;overflow:hidden;}
+.audience-bar{display:flex;border-bottom:0.5px solid var(--border);}
+.aud-tab{flex:1;padding:16px 12px;font-size:13px;font-weight:500;color:var(--muted);cursor:pointer;background:none;border:none;border-bottom:2px solid transparent;transition:all 0.2s;text-align:center;}
+.aud-tab.active{color:var(--orange);border-bottom-color:var(--orange);}
+.aud-tab .who{font-size:10px;display:block;text-transform:uppercase;letter-spacing:0.8px;margin-bottom:3px;opacity:0.6;}
+.aud-panel{display:none;padding:28px 32px;}
+.aud-panel.active{display:block;}
+
+/* RIDER */
+.quarter-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:20px;}
+.q-card{background:var(--dark3);border:0.5px solid var(--border);border-radius:12px;padding:16px;}
+.q-label{font-size:11px;color:var(--muted);letter-spacing:0.8px;text-transform:uppercase;margin-bottom:8px;}
+.q-val{font-family:'Syne',sans-serif;font-size:20px;font-weight:700;}
+.q-sub{font-size:11px;color:var(--muted);margin-top:4px;}
+.threshold-bar{background:var(--dark3);border:0.5px solid var(--border);border-radius:12px;padding:18px;margin-bottom:14px;}
+.tb-label{font-size:11px;color:var(--muted);margin-bottom:10px;}
+.tb-track{height:7px;background:var(--border);border-radius:4px;position:relative;margin-bottom:8px;}
+.tb-fill{height:100%;border-radius:4px;transition:width 0.4s,background 0.4s;}
+.tb-markers{display:flex;justify-content:space-between;font-size:10px;color:var(--muted);}
+.voucher-box{border-radius:14px;padding:18px;}
+.voucher-box.unlocked{background:rgba(30,158,117,0.08);border:0.5px solid rgba(30,158,117,0.25);}
+.voucher-box.locked{background:var(--dark3);border:0.5px solid var(--border);}
+.v-title{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;margin-bottom:6px;}
+.v-desc{font-size:12px;color:var(--muted);line-height:1.6;margin-bottom:12px;}
+.v-amount{font-family:'Syne',sans-serif;font-size:30px;font-weight:800;}
+.v-sub{font-size:11px;margin-top:5px;}
+
+input[type=range]{width:100%;-webkit-appearance:none;height:4px;border-radius:2px;background:var(--border);outline:none;}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:17px;height:17px;border-radius:50%;background:var(--orange);cursor:pointer;}
+
+/* CUSTOMER */
+.bill-card{background:var(--dark3);border:0.5px solid var(--border);border-radius:14px;padding:20px;max-width:360px;}
+.bill-header{font-family:'Syne',sans-serif;font-size:12px;font-weight:700;color:var(--muted);margin-bottom:14px;letter-spacing:0.3px;}
+.bill-row{display:flex;justify-content:space-between;align-items:flex-start;padding:9px 0;border-bottom:0.5px solid var(--border);font-size:13px;}
+.bill-row:last-child{border-bottom:none;padding-top:12px;}
+.bill-name{color:var(--muted);}
+.bill-name.strong{color:var(--text);font-weight:500;}
+.bill-amt{font-family:'Syne',sans-serif;font-size:13px;font-weight:600;}
+.bill-amt.total{font-size:18px;}
+.expand-row{cursor:pointer;}
+.expand-hint{font-size:10px;color:var(--orange-dim);margin-left:6px;}
+.expand-detail{background:rgba(252,96,17,0.05);border:0.5px solid rgba(252,96,17,0.15);border-radius:8px;padding:10px 12px;margin-top:8px;font-size:11px;color:var(--muted);line-height:1.8;display:none;}
+.expand-detail.open{display:block;}
+.expand-row-inner{display:flex;justify-content:space-between;margin-bottom:3px;}
+.expand-row-inner.fuel-line{color:var(--orange-dim);}
+.expand-note{font-size:10px;color:var(--muted);margin-top:8px;padding-top:8px;border-top:0.5px solid var(--border);line-height:1.6;}
+.info-box{border-radius:10px;padding:11px 14px;margin-top:12px;font-size:11px;line-height:1.65;max-width:360px;}
+.info-box.neutral{background:rgba(240,239,235,0.04);border:0.5px solid var(--border);color:var(--muted);}
+.info-box.positive{background:rgba(46,204,113,0.07);border:0.5px solid rgba(46,204,113,0.2);color:var(--green);}
+
+/* WEATHER */
+.weather-row{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:14px;}
+.w-card{background:var(--dark3);border:0.5px solid var(--border);border-radius:10px;padding:12px;cursor:pointer;transition:border-color 0.2s;text-align:center;}
+.w-card.sel{border-color:var(--orange);}
+.w-icon{font-size:20px;margin-bottom:5px;}
+.w-temp{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;}
+.w-name{font-size:10px;color:var(--muted);margin-top:2px;}
+.sug-box{background:var(--dark3);border:0.5px solid var(--border);border-radius:12px;padding:16px;}
+.sug-label{font-size:10px;color:var(--muted);letter-spacing:0.8px;text-transform:uppercase;margin-bottom:12px;}
+.sug-item{display:flex;align-items:center;gap:11px;padding:7px 0;border-bottom:0.5px solid var(--border);}
+.sug-item:last-child{border-bottom:none;}
+.sug-icon{font-size:18px;}
+.sug-name{font-size:12px;}
+.sug-why{font-size:10px;color:var(--muted);}
+.sug-footer{font-size:10px;color:var(--muted);margin-top:10px;padding-top:10px;border-top:0.5px solid var(--border);line-height:1.6;}
+
+/* RESTAURANT */
+.resto-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;}
+.resto-card{background:var(--dark3);border:0.5px solid var(--border);border-radius:12px;padding:14px;}
+.resto-label{font-size:10px;color:var(--muted);letter-spacing:0.8px;text-transform:uppercase;margin-bottom:8px;}
+.resto-val{font-family:'Syne',sans-serif;font-size:18px;font-weight:700;}
+.resto-sub{font-size:11px;color:var(--muted);margin-top:4px;}
+.alert-item{display:flex;gap:12px;align-items:flex-start;border:0.5px solid var(--border);border-radius:12px;padding:14px;margin-bottom:10px;}
+.alert-item.warn{border-color:rgba(240,165,0,0.25);background:rgba(240,165,0,0.05);}
+.alert-item.ok{border-color:rgba(30,158,117,0.25);background:rgba(30,158,117,0.05);}
+.alert-item.info{border-color:rgba(59,139,212,0.2);background:rgba(59,139,212,0.04);}
+.alert-icon{font-size:18px;flex-shrink:0;margin-top:2px;}
+.alert-title{font-size:13px;font-weight:500;margin-bottom:4px;}
+.alert-desc{font-size:11px;color:var(--muted);line-height:1.6;}
+
+/* COMPLIANCE SECTION */
+.compliance-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.comp-item{display:flex;align-items:flex-start;gap:12px;background:var(--dark2);border:0.5px solid var(--border);border-radius:12px;padding:14px;}
+.comp-text{font-size:12px;color:var(--muted);line-height:1.55;}
+.comp-text strong{color:var(--text);font-weight:500;display:block;margin-bottom:3px;}
+
+/* PROHIBITED TABLE */
+.prohibited-table{width:100%;border-collapse:collapse;margin-top:28px;}
+.prohibited-table th{font-size:11px;color:var(--muted);text-align:left;padding:10px 14px;border-bottom:0.5px solid var(--border);letter-spacing:0.5px;text-transform:uppercase;}
+.prohibited-table td{font-size:12px;padding:12px 14px;border-bottom:0.5px solid var(--border);vertical-align:top;line-height:1.55;}
+.prohibited-table td:first-child{color:var(--text);font-weight:500;width:36%;}
+.prohibited-table td:last-child{color:var(--muted);}
+.badge-safe{display:inline-block;background:rgba(46,204,113,0.1);color:var(--green);font-size:10px;font-weight:600;border-radius:5px;padding:2px 7px;margin-bottom:4px;}
+.badge-na{display:inline-block;background:var(--dark3);color:var(--muted);font-size:10px;font-weight:500;border-radius:5px;padding:2px 7px;margin-bottom:4px;}
+
+footer{border-top:0.5px solid var(--border);padding:36px 40px;display:flex;justify-content:space-between;align-items:center;max-width:1000px;margin:0 auto;}
+.footer-brand{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;}
+.footer-brand span{color:var(--orange);}
+.footer-links{display:flex;gap:22px;}
+.footer-links a{font-size:12px;color:var(--muted);text-decoration:none;}
+
+@media(max-width:680px){
+  nav{padding:14px 20px;}
+  nav .links{display:none;}
+  .hero{padding:60px 20px;}
+  section{padding:60px 20px;}
+  .hero-stats{gap:18px;}
+  .crisis-grid,.quarter-grid,.resto-grid,.compliance-grid{grid-template-columns:1fr;}
+  .weather-row{grid-template-columns:1fr 1fr;}
+  .module-body{padding:0 20px 22px;}
+  footer{flex-direction:column;gap:16px;text-align:center;}
+  .aud-panel{padding:20px;}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">Crisis<span>IQ</span><span class="nav-chip">Swiggy Builders Club</span></div>
+  <div class="links">
+    <a href="#problem">Problem</a>
+    <a href="#modules">Modules</a>
+    <a href="#demo">Demo</a>
+    <a href="#compliance">Compliance</a>
+  </div>
+  <a class="nav-cta" href="https://mcp.swiggy.com/builders/access/" target="_blank">Builders Club ↗</a>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-eyebrow">Swiggy Builders Club — Developer Submission · May 2026</div>
+  <h1>Stable delivery in an<br><em>unstable world</em></h1>
+  <p>An AI informational layer that reads quarterly fuel averages, IMD climate data, and commodity prices — giving riders welfare, restaurants foresight, and customers honest transparency. No new charges. No ranking changes. No dark patterns.</p>
+  <div class="hero-stats">
+    <div class="hero-stat"><div class="num">3</div><div class="label">Audience layers</div></div>
+    <div class="hero-stat"><div class="num">0</div><div class="label">New charges added</div></div>
+    <div class="hero-stat"><div class="num">0</div><div class="label">Ranking signals changed</div></div>
+    <div class="hero-stat"><div class="num">Quarterly</div><div class="label">Trigger — not daily</div></div>
+  </div>
+</div>
+
+<div class="sep"></div>
+
+<!-- PROBLEM -->
+<section id="problem">
+  <div class="section-label">The problem</div>
+  <h2 class="section-title">Three crises. One platform. No early warning.</h2>
+  <p class="section-sub">Swiggy's current systems handle demand and routing well. None of them read external economic signals — fuel, climate, or commodity prices — and translate them into welfare or transparency actions.</p>
+  <div class="crisis-grid">
+    <div class="crisis-card">
+      <div class="crisis-icon">⛽</div>
+      <h3>Petrol price volatility</h3>
+      <p>Quarterly averages spike ₹10–15 above year-start baselines. Riders absorb the full cost. The existing BPCL fuel card gives a static discount — it doesn't respond to market conditions.</p>
+    </div>
+    <div class="crisis-card">
+      <div class="crisis-icon">🌡</div>
+      <h3>Super El Niño 2026–27</h3>
+      <p>WMO confirms 70%+ probability of strong El Niño peaking in 2027. Riders already face 42°C+ sustained heat in Hyderabad, Nagpur, and parts of AP with no proactive safety layer.</p>
+    </div>
+    <div class="crisis-card">
+      <div class="crisis-icon">🍳</div>
+      <h3>LPG & cooking oil surge</h3>
+      <p>Restaurant input costs rising sharply. Partners raise menu prices or silently reduce portions. Customers blame Swiggy for both. Ratings and trust erode.</p>
+    </div>
+    <div class="crisis-card">
+      <div class="crisis-icon">🌧</div>
+      <h3>Erratic monsoon</h3>
+      <p>El Niño drives drought in Maharashtra and Marathwada, flash floods in coastal AP and Karnataka. Rural delivery routes become impassable with zero advance notice.</p>
+    </div>
+  </div>
+</section>
+
+<div class="sep"></div>
+
+<!-- MODULES -->
+<section id="modules">
+  <div class="section-label">The solution</div>
+  <h2 class="section-title">Three modules. Three audiences. Purely informational.</h2>
+  <p class="section-sub">CrisisIQ does not touch Swiggy's order flow, pricing engine, or ranking algorithm. It is an informational layer — welfare for riders, foresight for restaurants, transparency for customers.</p>
+
+  <div class="module-card m1">
+    <div class="module-header">
+      <div class="module-num">01</div>
+      <div>
+        <div class="module-title">FuelSense — Rider welfare</div>
+        <div class="module-desc">Quarterly bike servicing vouchers + heat safety alerts. Inside the Swiggy delivery partner app only.</div>
+        <div class="module-tags"><span class="tag tag-rider">🛵 Rider app</span><span class="tag" style="background:rgba(252,96,17,0.08);color:var(--orange-dim)">MCP: rider earnings scope</span></div>
+      </div>
+    </div>
+    <div class="module-body">
+      <ul class="feature-list">
+        <li>Monitors the quarterly average petrol price using PPAC India open data. If the Q2 quarterly average rises ₹10 or more above the Q1 baseline, a bike servicing voucher is unlocked — not a daily pay tweak or per-delivery surcharge.</li>
+        <li>Voucher value: ₹500–₹800, redeemable at Swiggy-partnered garages. Urban and rural riders both eligible. Riders see one simple message: "Your Q2 servicing voucher is ready." No financial jargon, no complex calculations.</li>
+        <li>Heat safety alert: when IMD data shows 40°C+ sustained for 3+ consecutive days in a zone, the rider app shows a rest window recommendation. If a rider takes a rest during a declared heat alert, their incentive streak is not broken. This is a welfare flag — not a routing or order assignment change.</li>
+        <li>Monsoon route advisory: in El Niño flood-prone zones, pre-identified flood-risk road segments are flagged. The rider sees a route advisory before accepting an order — purely informational. The rider decides, Swiggy's routing engine is not overridden.</li>
+        <li>Strictly no language voice alerts — removed. No per-delivery fuel calculations. No daily pay changes. No manipulation of incentive structures beyond the declared streak-protection during heat alerts.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="module-card m2">
+    <div class="module-header">
+      <div class="module-num">02</div>
+      <div>
+        <div class="module-title">AffordaMatch — Customer transparency</div>
+        <div class="module-desc">Delivery fee breakdown transparency + climate-aware discovery. Inside the Swiggy customer app only.</div>
+        <div class="module-tags"><span class="tag tag-customer">👤 Customer app</span><span class="tag" style="background:rgba(252,96,17,0.08);color:var(--orange-dim)">MCP: order + pricing scope</span></div>
+      </div>
+    </div>
+    <div class="module-body">
+      <ul class="feature-list">
+        <li>Zero new charges. The customer's total bill does not change by a single rupee. What changes: the existing "GST & Other Charges" line becomes tap-to-expand, showing a plain breakdown of what already exists inside that number. This is transparency, not a price change.</li>
+        <li>Fuel component visibility only activates when the quarterly average crosses ₹10+ above the Q1 baseline — not for every ₹1–2 daily movement. When fuel is at or below baseline, no fuel mention appears at all. No noise, no false urgency.</li>
+        <li>Ranking and order flow untouched: the fee breakdown is purely a display layer on the checkout screen. It does not affect which restaurants are shown, in what order, or any discovery algorithm. Swiggy's ranking engine receives no signal from CrisisIQ.</li>
+        <li>Weather-adaptive discovery: on IMD-confirmed sustained heat (40°C+ for 3+ days), cold beverages and chilled food surface with a visible label "Showing heat-day suggestions — not a paid placement." The label is mandatory, always shown, and the logic is disclosed. Swiggy's standard ranking order is preserved underneath — this is a curated shelf, not a ranking override.</li>
+        <li>Rural pre-scheduling: in El Niño disrupted zones, customers can opt into pre-ordering for a future slot. This is an additional option — it does not remove or alter standard ordering. No urgency or scarcity framing used.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="module-card m3">
+    <div class="module-header">
+      <div class="module-num">03</div>
+      <div>
+        <div class="module-title">RestoCost Shield — Restaurant foresight</div>
+        <div class="module-desc">Input cost forecasting + opt-in group buying. Inside the Swiggy restaurant partner portal only.</div>
+        <div class="module-tags"><span class="tag tag-restaurant">🏪 Partner portal</span><span class="tag" style="background:rgba(252,96,17,0.08);color:var(--orange-dim)">MCP: menu + order scope</span></div>
+      </div>
+    </div>
+    <div class="module-body">
+      <ul class="feature-list">
+        <li>Reads wholesale price indices for cooking oil, LPG, and key ingredients from AGMARKNET (Ministry of Agriculture open data). Mapped to each restaurant's cuisine type — an Andhra rice restaurant sees basmati and oil alerts only, not irrelevant commodities.</li>
+        <li>Price forecasts 3–4 weeks ahead, clearly labeled as forecasts with uncertainty ranges. The restaurant decides what to do — CrisisIQ makes no pricing recommendations and does not touch the menu on Swiggy. It is an informational advisory, not an instruction.</li>
+        <li>Shrinkflation monitor: if a restaurant's average order value holds steady but ratings drop, CrisisIQ flags it privately in the partner portal — for the restaurant's eyes only. This is never shared with customers, never used in any Swiggy ranking or visibility decision, and is disclosed to the restaurant as a signal, not a verdict.</li>
+        <li>Group buy coordination: opt-in only. A restaurant can join or ignore entirely. Their listing, ranking, and visibility on Swiggy are explicitly stated to be unaffected by whether they join or not. No coercion, no implicit penalty.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<div class="sep"></div>
+
+<!-- DEMO -->
+<section id="demo">
+  <div class="section-label">Interactive prototype</div>
+  <h2 class="section-title">Select your audience. See only what they see.</h2>
+  <p class="section-sub">Each tab shows exactly what one audience sees — and nothing more. Riders do not see restaurant data. Customers do not see rider data. These are separate layers inside separate Swiggy apps.</p>
+
+  <div class="demo-wrap">
+    <div class="audience-bar">
+      <button class="aud-tab active" onclick="switchAud('rider',this)">
+        <span class="who">Delivery partner app</span>🛵 Rider view
+      </button>
+      <button class="aud-tab" onclick="switchAud('customer',this)">
+        <span class="who">Swiggy customer app</span>👤 Customer view
+      </button>
+      <button class="aud-tab" onclick="switchAud('restaurant',this)">
+        <span class="who">Swiggy partner portal</span>🏪 Restaurant view
+      </button>
+    </div>
+
+    <!-- ── RIDER PANEL ── -->
+    <div class="aud-panel active" id="panel-rider">
+      <div class="compliance-banner">
+        ✅ This panel is inside the Swiggy delivery partner app only. It does not affect order assignment, routing algorithms, or incentive structures — except the explicitly declared streak protection during IMD heat alerts.
+      </div>
+      <div style="font-size:12px;color:var(--muted);margin-bottom:18px;">Drag the slider to simulate what happens as the quarterly fuel average rises above the Q1 baseline.</div>
+
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;flex-wrap:wrap;">
+        <span style="font-size:12px;color:var(--muted);white-space:nowrap;">Q2 quarterly avg petrol price:</span>
+        <span style="font-size:12px;color:var(--muted);">₹90</span>
+        <input type="range" min="90" max="140" value="98" step="1" id="rider-fuel" oninput="updateRider()" style="flex:1;min-width:120px;">
+        <span style="font-size:12px;color:var(--muted);">₹140</span>
+        <span style="font-family:'Syne',sans-serif;font-size:16px;font-weight:700;min-width:44px;" id="rider-fuel-val">₹98</span>
+      </div>
+      <div style="font-size:11px;color:var(--muted);margin-bottom:20px;">Q1 baseline: ₹95/L &nbsp;·&nbsp; Voucher unlocks when Q2 average reaches ₹105+ &nbsp;·&nbsp; Trigger is quarterly, not daily</div>
+
+      <div class="quarter-grid">
+        <div class="q-card">
+          <div class="q-label">Q2 quarterly average</div>
+          <div class="q-val" id="r-avg">₹98/L</div>
+          <div class="q-sub">Apr–Jun 2026</div>
+        </div>
+        <div class="q-card">
+          <div class="q-label">Above Q1 baseline</div>
+          <div class="q-val" id="r-above" style="color:var(--amber);">+₹3</div>
+          <div class="q-sub">Need +₹10 to unlock voucher</div>
+        </div>
+        <div class="q-card">
+          <div class="q-label">Active deliveries Q2</div>
+          <div class="q-val" style="color:var(--green);">847</div>
+          <div class="q-sub">Rider is eligible</div>
+        </div>
+        <div class="q-card">
+          <div class="q-label">Heat alerts (IMD)</div>
+          <div class="q-val" id="r-heat" style="color:var(--amber);">3 days</div>
+          <div class="q-sub">Streak protected on those days</div>
+        </div>
+      </div>
+
+      <div class="threshold-bar">
+        <div class="tb-label">Quarterly threshold progress — voucher unlocks at ₹105/L</div>
+        <div class="tb-track">
+          <div class="tb-fill" id="r-bar" style="width:30%;background:var(--amber);"></div>
+        </div>
+        <div class="tb-markers"><span>₹95 (Q1 baseline)</span><span>₹100</span><span>₹105 (unlock)</span></div>
+      </div>
+
+      <div id="voucher-box" class="voucher-box locked">
+        <div class="v-title" id="v-title">🔒 Bike servicing voucher — not yet unlocked</div>
+        <div class="v-desc" id="v-desc">Q2 quarterly average (₹98/L) is ₹3 above the Q1 baseline. Voucher unlocks when the quarterly average reaches ₹105/L. Move the slider above ₹105 to see what the rider sees when it unlocks.</div>
+        <div class="v-amount" id="v-amount" style="color:var(--muted);">₹0</div>
+        <div class="v-sub" id="v-sub" style="color:var(--muted);">Not yet unlocked this quarter</div>
+      </div>
+    </div>
+
+    <!-- ── CUSTOMER PANEL ── -->
+    <div class="aud-panel" id="panel-customer">
+      <div class="compliance-banner">
+        ✅ The customer's total bill does not change. No new charges. No ranking or order flow changes. The fee breakdown is purely a display layer — tap to expand the existing "GST & Other Charges" line to see what's already inside it.
+      </div>
+
+      <div style="display:flex;gap:24px;align-items:flex-start;flex-wrap:wrap;">
+        <div>
+          <div style="font-size:12px;color:var(--muted);margin-bottom:12px;">Checkout screen — Ghee Ariselu, Hyderabad. Tap the charges line to expand.</div>
+          <div class="bill-card">
+            <div class="bill-header">Order summary</div>
+            <div class="bill-row">
+              <span class="bill-name">Item total</span>
+              <span class="bill-amt">₹211</span>
+            </div>
+            <div class="bill-row">
+              <span class="bill-name">Delivery fee (1.4 km) · Swiggy One</span>
+              <span class="bill-amt" style="color:var(--green);font-size:12px;">FREE <s style="color:var(--muted);font-size:10px;">₹15</s></span>
+            </div>
+            <div class="bill-row expand-row" onclick="toggleExpand()">
+              <span class="bill-name">GST & other charges<span class="expand-hint" id="expand-hint">↓ tap to see what's inside</span></span>
+              <span class="bill-amt">₹28.08</span>
+            </div>
+            <div class="expand-detail" id="expand-detail">
+              <div class="expand-row-inner"><span>GST (5% on food)</span><span>₹10.55</span></div>
+              <div class="expand-row-inner"><span>Platform convenience fee</span><span>₹12.00</span></div>
+              <div class="expand-row-inner fuel-line"><span>⛽ Fuel cost component (Q2 avg ₹98/L)</span><span>₹5.53</span></div>
+              <div class="expand-note">
+                The fuel component reflects the quarterly average petrol price in your city (PPAC India data). Your total of ₹28.08 is unchanged — this is a breakdown of what was always inside it, not a new charge. This component only appears when the quarterly average is ₹10+ above the January baseline.
+              </div>
+            </div>
+            <div class="bill-row">
+              <span class="bill-name strong">Total to pay</span>
+              <span class="bill-amt total">₹239</span>
+            </div>
+          </div>
+          <div class="info-box neutral" style="margin-top:12px;">
+            ℹ️ Fuel prices are slightly above the Q1 baseline this quarter. The ₹5.53 fuel component reflects the quarterly average (PPAC India). Your total is ₹239 — same as it would be without this breakdown visible.
+          </div>
+        </div>
+
+        <div style="flex:1;min-width:200px;">
+          <div style="font-size:11px;color:var(--muted);margin-bottom:10px;letter-spacing:0.5px;text-transform:uppercase;">Climate-aware discovery — 43°C Hyderabad today</div>
+          <div class="weather-row">
+            <div class="w-card sel" onclick="setWeather('heat',this)" id="wc-heat"><div class="w-icon">🔥</div><div class="w-temp">43°C</div><div class="w-name">Hyderabad</div></div>
+            <div class="w-card" onclick="setWeather('rain',this)" id="wc-rain"><div class="w-icon">🌧</div><div class="w-temp">26°C</div><div class="w-name">Coastal AP</div></div>
+            <div class="w-card" onclick="setWeather('drought',this)" id="wc-drought"><div class="w-icon">🏜</div><div class="w-temp">41°C</div><div class="w-name">Marathwada</div></div>
+            <div class="w-card" onclick="setWeather('normal',this)" id="wc-normal"><div class="w-icon">🌤</div><div class="w-temp">28°C</div><div class="w-name">Pune</div></div>
+          </div>
+          <div class="sug-box">
+            <div class="sug-label" id="sug-label">Heat-day suggestions — not a paid placement</div>
+            <div id="sug-items"></div>
+            <div class="sug-footer" id="sug-footer">IMD confirmed 40°C+ for 4 consecutive days. This curated shelf is shown as a utility feature. Swiggy's standard ranking order is unchanged beneath it. Logic source is disclosed. No restaurant paid for placement here.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── RESTAURANT PANEL ── -->
+    <div class="aud-panel" id="panel-restaurant">
+      <div class="compliance-banner">
+        ✅ This panel is inside the Swiggy partner portal only. All alerts are advisory — the restaurant decides what to do. No data here is shared with customers. No alert affects the restaurant's ranking or visibility on Swiggy.
+      </div>
+
+      <div class="resto-grid">
+        <div class="resto-card">
+          <div class="resto-label">Cooking oil — Q2 avg</div>
+          <div class="resto-val" style="color:var(--amber);">₹142/L</div>
+          <div class="resto-sub">+14% vs Q1 baseline ₹124/L</div>
+        </div>
+        <div class="resto-card">
+          <div class="resto-label">LPG cylinder — Q2 avg</div>
+          <div class="resto-val" style="color:var(--amber);">₹1,020</div>
+          <div class="resto-sub">+8% vs Q1 baseline ₹945</div>
+        </div>
+        <div class="resto-card">
+          <div class="resto-label">Your cuisine type</div>
+          <div class="resto-val" style="font-size:15px;">Andhra · Rice</div>
+          <div class="resto-sub">Watching: basmati, cooking oil, LPG</div>
+        </div>
+        <div class="resto-card">
+          <div class="resto-label">Rating trend</div>
+          <div class="resto-val" style="color:var(--green);">Stable 4.3★</div>
+          <div class="resto-sub">No shrinkflation signal detected</div>
+        </div>
+      </div>
+
+      <div class="alert-item warn">
+        <div class="alert-icon">⚠️</div>
+        <div>
+          <div class="alert-title">Cooking oil forecast — advisory only</div>
+          <div class="alert-desc">AGMARKNET wholesale data and El Niño crop models suggest cooking oil may reach ₹158–165/L by mid-July 2026. This is a forecast with uncertainty — not a guarantee. What you do with this information is entirely your decision. CrisisIQ does not touch your Swiggy menu or pricing.</div>
+        </div>
+      </div>
+
+      <div class="alert-item ok">
+        <div class="alert-icon">🤝</div>
+        <div>
+          <div class="alert-title">Group buy — opt-in only, no obligations</div>
+          <div class="alert-desc">6 nearby partners have opted into a Q3 cooking oil group buy. Projected saving: 18–22% vs retail. Closes July 1. You can join or ignore this entirely. Your Swiggy listing, ranking, and visibility are not affected either way — this is stated explicitly and contractually.</div>
+        </div>
+      </div>
+
+      <div class="alert-item info">
+        <div class="alert-icon">📊</div>
+        <div>
+          <div class="alert-title">Shrinkflation monitor — all clear · Private to you</div>
+          <div class="alert-desc">Your average order value (₹211) and ratings (4.3★) are both stable. No flag raised. If a signal appears in future, it is shown here only — never to customers, never used in any Swiggy ranking or visibility decision, and disclosed to you as a signal, not a verdict.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="sep"></div>
+
+<!-- COMPLIANCE SECTION -->
+<section id="compliance">
+  <div class="section-label">Full compliance mapping</div>
+  <h2 class="section-title">Every rule. Mapped explicitly.</h2>
+  <p class="section-sub">Against Swiggy's published "What We Allow", "Not Allowed", and "Prohibited Conduct (Zero Tolerance)" guidelines.</p>
+
+  <div class="compliance-grid">
+    <div class="comp-item"><span style="font-size:18px;">✅</span><div class="comp-text"><strong>Makes ordering / discovery better for users</strong>Transparent fee breakdown reduces confusion. Climate discovery helps customers find relevant food. Both are informational improvements, not manipulations.</div></div>
+    <div class="comp-item"><span style="font-size:18px;">✅</span><div class="comp-text"><strong>AI copilot using MCP to automate commerce workflows</strong>Reads Swiggy Food + Instamart MCP servers (rider earnings, menu data, order patterns). External signals from PPAC, IMD, AGMARKNET — all Indian government open data.</div></div>
+    <div class="comp-item"><span style="font-size:18px;">✅</span><div class="comp-text"><strong>Swiggy branding always visible — no aggregation layer</strong>CrisisIQ is embedded inside Swiggy's own apps. It never operates as a separate product that could hide Swiggy's brand or confuse users about what platform they are on.</div></div>
+    <div class="comp-item"><span style="font-size:18px;">✅</span><div class="comp-text"><strong>No misrepresentation of prices or delivery times</strong>The fee breakdown shows existing charges — total paid is identical. Delivery time estimates come from Swiggy only. CrisisIQ never displays or modifies a delivery time.</div></div>
+    <div class="comp-item"><span style="font-size:18px;">✅</span><div class="comp-text"><strong>No scraping or data beyond MCP scope</strong>Only rider earnings, menu prices, and order data via agreed MCP scope. PPAC, IMD, AGMARKNET are open government APIs — no scraping involved.</div></div>
+    <div class="comp-item"><span style="font-size:18px;">✅</span><div class="comp-text"><strong>Not using APIs for competitive intelligence</strong>No competitor data is read, stored, or benchmarked. MCP access is used only to inform riders, restaurants, and customers about external conditions.</div></div>
+    <div class="comp-item"><span style="font-size:18px;">✅</span><div class="comp-text"><strong>Commercial partnership — both sides win</strong>Swiggy retains riders with welfare vouchers, stabilises restaurant partners with cost foresight, builds customer trust with honest transparency. CrisisIQ gets MCP access to demonstrate the concept.</div></div>
+    <div class="comp-item"><span style="font-size:18px;">✅</span><div class="comp-text"><strong>Shares demo and walkthrough — encouraged category</strong>This page is the demo. GitHub repo contains full source. Both shared openly as encouraged by Builders Club guidelines.</div></div>
+  </div>
+
+  <table class="prohibited-table">
+    <thead>
+      <tr>
+        <th>Prohibited conduct rule</th>
+        <th>CrisisIQ status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>01 · Manipulating order flows, incentives, or ranking systems</td>
+        <td><span class="badge-safe">SAFE</span><br>Order flow: untouched. Ranking algorithm: untouched. Incentive structure: untouched except declared streak-protection during IMD heat alerts, which is a welfare measure explicitly disclosed to riders — not a hidden manipulation.</td>
+      </tr>
+      <tr>
+        <td>02 · Dark patterns, deceptive UX, or misattributing data sources</td>
+        <td><span class="badge-safe">SAFE</span><br>Every feature labels its data source (PPAC, IMD, AGMARKNET). Weather suggestions are labeled "not a paid placement." Fee breakdown note explicitly says it is not a new charge. No urgency framing, no scarcity language.</td>
+      </tr>
+      <tr>
+        <td>03 · Generating fake traffic or abusing rate limits</td>
+        <td><span class="badge-safe">SAFE</span><br>PPAC data polled once daily. IMD data polled every 6 hours. AGMARKNET data polled weekly. No real-time hammering. All within normal API usage patterns.</td>
+      </tr>
+      <tr>
+        <td>04 · Harvesting data beyond agreed scope</td>
+        <td><span class="badge-safe">SAFE</span><br>MCP scope requested: rider earnings, menu prices, order history. Nothing beyond this is read or stored. External data is from public government APIs only.</td>
+      </tr>
+      <tr>
+        <td>05 · Reverse engineering MCP internals</td>
+        <td><span class="badge-safe">SAFE</span><br>CrisisIQ uses only documented MCP API endpoints. No inspection or reverse engineering of internal Swiggy systems.</td>
+      </tr>
+      <tr>
+        <td>06 · Circumventing whitelisting or access controls</td>
+        <td><span class="badge-safe">SAFE</span><br>Operates entirely within granted MCP access. OAuth 2.0 standard auth flow. No attempts to access non-whitelisted endpoints.</td>
+      </tr>
+      <tr>
+        <td>07 · Violating user privacy or security regulations</td>
+        <td><span class="badge-safe">SAFE</span><br>Rider data stays within the partner app scope. Shrinkflation signals are private to the restaurant — never exposed to customers. No personal data stored beyond session.</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<div class="sep"></div>
+
+<section>
+  <div class="section-label">Data sources</div>
+  <h2 class="section-title">Open government data only</h2>
+  <p class="section-sub">No scraping. No competitor data. No copyright issues. All external signals come from Indian government open data portals.</p>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;">
+    <div style="background:var(--dark2);border:0.5px solid var(--border);border-radius:12px;padding:16px;">
+      <div style="font-size:10px;color:var(--muted);letter-spacing:1px;margin-bottom:8px;">FUEL PRICES</div>
+      <div style="font-size:13px;font-weight:500;">PPAC India</div>
+      <div style="font-size:11px;color:var(--muted);margin-top:4px;">Petroleum Planning & Analysis Cell — monthly retail averages by city. Quarterly aggregation done locally.</div>
+    </div>
+    <div style="background:var(--dark2);border:0.5px solid var(--border);border-radius:12px;padding:16px;">
+      <div style="font-size:10px;color:var(--muted);letter-spacing:1px;margin-bottom:8px;">WEATHER + HEAT</div>
+      <div style="font-size:13px;font-weight:500;">IMD API</div>
+      <div style="font-size:11px;color:var(--muted);margin-top:4px;">India Meteorological Department — temperature and humidity by district. Used for heat alerts and monsoon route advisories only.</div>
+    </div>
+    <div style="background:var(--dark2);border:0.5px solid var(--border);border-radius:12px;padding:16px;">
+      <div style="font-size:10px;color:var(--muted);letter-spacing:1px;margin-bottom:8px;">COMMODITY PRICES</div>
+      <div style="font-size:13px;font-weight:500;">AGMARKNET</div>
+      <div style="font-size:11px;color:var(--muted);margin-top:4px;">Ministry of Agriculture — wholesale prices for LPG, cooking oil, grains. Used for restaurant advisories only.</div>
+    </div>
+    <div style="background:var(--dark2);border:0.5px solid var(--border);border-radius:12px;padding:16px;">
+      <div style="font-size:10px;color:var(--muted);letter-spacing:1px;margin-bottom:8px;">INFLATION INDEX</div>
+      <div style="font-size:13px;font-weight:500;">MOSPI CPI</div>
+      <div style="font-size:11px;color:var(--muted);margin-top:4px;">Ministry of Statistics — Consumer Price Index. Used for restaurant cost benchmarking context only.</div>
+    </div>
+  </div>
+</section>
+
+<div class="sep"></div>
+<footer>
+  <div>
+    <div class="footer-brand">Crisis<span>IQ</span></div>
+    <div style="font-size:11px;color:var(--muted);margin-top:4px;">Swiggy Builders Club · May 2026 · BalajiParlapalli</div>
+  </div>
+  <div class="footer-links">
+    <a href="https://mcp.swiggy.com/builders/">Builders Club</a>
+    <a href="https://github.com/BalajiParlapalli/Swiggy---crisisiq">GitHub repo</a>
+  </div>
+</footer>
+
+<script>
+function switchAud(name,btn){
+  document.querySelectorAll('.aud-tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.aud-panel').forEach(p=>p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('panel-'+name).classList.add('active');
+}
+
+function updateRider(){
+  const price=parseInt(document.getElementById('rider-fuel').value);
+  const baseline=95,unlock=105;
+  const above=price-baseline;
+  const pct=Math.min(100,Math.max(0,((price-baseline)/(unlock-baseline))*100));
+
+  document.getElementById('rider-fuel-val').textContent='₹'+price;
+  document.getElementById('r-avg').textContent='₹'+price+'/L';
+  document.getElementById('r-above').textContent=(above>=0?'+':'')+'₹'+above;
+  document.getElementById('r-above').style.color=price>=unlock?'var(--red)':above>=5?'var(--amber)':'var(--green)';
+  document.getElementById('r-heat').textContent=price>115?'8 days':price>105?'3 days':'0 days';
+
+  const bar=document.getElementById('r-bar');
+  bar.style.width=pct+'%';
+  bar.style.background=pct>=100?'var(--green)':pct>=50?'var(--amber)':'var(--muted)';
+
+  const box=document.getElementById('voucher-box');
+  const vt=document.getElementById('v-title');
+  const vd=document.getElementById('v-desc');
+  const va=document.getElementById('v-amount');
+  const vs=document.getElementById('v-sub');
+
+  if(price>=unlock){
+    box.className='voucher-box unlocked';
+    vt.textContent='✅ Bike servicing voucher — unlocked for Q2 2026';
+    vd.textContent='Q2 quarterly average (₹'+price+'/L) is ₹'+above+' above the Q1 baseline. Your servicing voucher is ready. Redeem at any Swiggy-partnered garage before quarter end.';
+    va.textContent=price>=120?'₹800':'₹500';
+    va.style.color='var(--green)';
+    vs.textContent='Valid until 30 June 2026 · '+(price>=120?'High fuel tier — ₹800':'Standard tier — ₹500');
+    vs.style.color='var(--teal)';
+  } else {
+    box.className='voucher-box locked';
+    vt.textContent='🔒 Bike servicing voucher — not yet unlocked';
+    vd.textContent='Q2 quarterly average (₹'+price+'/L) is ₹'+above+' above the Q1 baseline. Voucher unlocks when quarterly average reaches ₹105/L. Trigger is quarterly — not daily price movements.';
+    va.textContent='₹0';
+    va.style.color='var(--muted)';
+    vs.textContent='Not yet unlocked this quarter';
+    vs.style.color='var(--muted)';
+  }
+}
+
+const weatherData={
+  heat:{
+    label:'Heat-day suggestions — not a paid placement',
+    footer:'IMD confirmed 40°C+ for 4 consecutive days in Hyderabad. This curated shelf is a utility feature. Swiggy\'s standard ranking is unchanged beneath it. No restaurant paid for placement here. Data source: IMD.',
+    items:[
+      {icon:'🧊',name:'Cold brew & iced coffees',why:'Heat utility — 43°C sustained'},
+      {icon:'🍦',name:'Ice cream & frozen desserts',why:'Automatically surfaced on heat days'},
+      {icon:'🥗',name:'Chilled salad bowls',why:'Lighter meals in extreme heat'},
+      {icon:'💧',name:'Electrolyte drinks & juices',why:'Hydration relevance — IMD heat alert'}
+    ]
+  },
+  rain:{
+    label:'Monsoon-day suggestions — not a paid placement',
+    footer:'IMD confirmed heavy rainfall in Coastal AP. Comfort food surfaced as utility feature. Swiggy\'s standard ranking unchanged beneath it.',
+    items:[
+      {icon:'🍜',name:'Hot soups & noodles',why:'Monsoon comfort — utility'},
+      {icon:'☕',name:'Hot teas & filter coffee',why:'Warm beverages on rain days'},
+      {icon:'🥘',name:'Curries & rice meals',why:'Hearty comfort food'},
+      {icon:'⚠️',name:'Delivery ETA: +10 min',why:'Route advisory — flood risk roads flagged'}
+    ]
+  },
+  drought:{
+    label:'Standard discovery — El Niño drought zone',
+    footer:'No special discovery layer active. Standard Swiggy ranking applies. Pre-scheduling option available as an additional optional feature — does not replace standard ordering.',
+    items:[
+      {icon:'🍽',name:'Standard ranking active',why:'No weather override in drought zones'},
+      {icon:'📅',name:'Pre-schedule option available',why:'Optional — for disruption-prone areas only'},
+      {icon:'⛽',name:'Fuel component: within normal range',why:'No fee breakdown triggered this quarter'},
+      {icon:'✅',name:'All routes clear today',why:'IMD: no flood risk in this zone today'}
+    ]
+  },
+  normal:{
+    label:'Standard discovery — normal conditions',
+    footer:'No CrisisIQ overlays active. Standard Swiggy ranking and discovery apply entirely.',
+    items:[
+      {icon:'🍕',name:'Standard discovery — no overrides',why:'Normal Swiggy ranking active'},
+      {icon:'⛽',name:'Fuel component: below threshold',why:'Q2 avg below ₹105 — no breakdown shown'},
+      {icon:'🌡',name:'Heat index: safe (28°C)',why:'No heat alerts — no curated shelf'},
+      {icon:'✅',name:'All routes clear',why:'No weather disruptions in zone'}
+    ]
+  }
+};
+
+function setWeather(type,el){
+  document.querySelectorAll('.w-card').forEach(c=>c.classList.remove('sel'));
+  el.classList.add('sel');
+  const d=weatherData[type];
+  document.getElementById('sug-label').textContent=d.label;
+  document.getElementById('sug-footer').textContent=d.footer;
+  document.getElementById('sug-items').innerHTML=d.items.map(i=>`
+    <div class="sug-item">
+      <div class="sug-icon">${i.icon}</div>
+      <div><div class="sug-name">${i.name}</div><div class="sug-why">${i.why}</div></div>
+    </div>`).join('');
+}
+
+function toggleExpand(){
+  const d=document.getElementById('expand-detail');
+  const h=document.getElementById('expand-hint');
+  d.classList.toggle('open');
+  h.textContent=d.classList.contains('open')?'↑ close':'↓ tap to see what\'s inside';
+}
+
+updateRider();
+setWeather('heat',document.getElementById('wc-heat'));
+</script>
+</body>
+</html>
