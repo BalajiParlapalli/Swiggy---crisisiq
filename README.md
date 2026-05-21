@@ -8,7 +8,7 @@ A Swiggy MCP platform submission that protects riders, restaurant partners, and 
 
 ## Live Demo
 
-👉 **[View the interactive demo](https://YOUR-USERNAME.github.io/crisisiq/)** ← replace after GitHub Pages deploy
+👉 **[View the interactive demo](https://BalajiParlapalli.github.io/crisisiq/)** ← replace after GitHub Pages deploy
 
 ---
 
