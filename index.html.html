@@ -1,0 +1,1039 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CrisisIQ — Swiggy Builders Club</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --orange: #FC6011;
+  --orange-dim: #FF8A47;
+  --dark: #0A0A0A;
+  --dark2: #111111;
+  --dark3: #1A1A1A;
+  --border: rgba(255,255,255,0.08);
+  --text: #F0EFEB;
+  --muted: rgba(240,239,235,0.45);
+  --green: #2ECC71;
+  --amber: #F0A500;
+  --red: #E74C3C;
+  --blue: #3B8BD4;
+  --teal: #1D9E75;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--dark);
+  color: var(--text);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4, .nav-logo { font-family: 'Syne', sans-serif; }
+
+/* ── NAV ── */
+nav {
+  position: sticky; top: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 16px 40px;
+  background: rgba(10,10,10,0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 0.5px solid var(--border);
+}
+.nav-logo {
+  font-size: 18px; font-weight: 800; letter-spacing: -0.5px;
+  display: flex; align-items: center; gap: 10px;
+}
+.nav-logo span { color: var(--orange); }
+.nav-chip {
+  font-size: 11px; font-weight: 500;
+  background: rgba(252,96,17,0.12);
+  color: var(--orange-dim);
+  border: 0.5px solid rgba(252,96,17,0.3);
+  border-radius: 20px;
+  padding: 3px 10px;
+  letter-spacing: 0.3px;
+}
+nav .links { display: flex; gap: 28px; }
+nav .links a {
+  font-size: 13px; color: var(--muted); text-decoration: none;
+  transition: color 0.2s;
+}
+nav .links a:hover { color: var(--text); }
+.nav-cta {
+  font-size: 13px; font-weight: 500;
+  background: var(--orange);
+  color: #fff;
+  border: none; border-radius: 8px;
+  padding: 8px 18px;
+  cursor: pointer;
+  transition: opacity 0.2s;
+  text-decoration: none;
+}
+.nav-cta:hover { opacity: 0.88; }
+
+/* ── HERO ── */
+.hero {
+  padding: 100px 40px 80px;
+  max-width: 900px; margin: 0 auto;
+  text-align: center;
+}
+.hero-eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 12px; font-weight: 500; letter-spacing: 1px;
+  color: var(--orange-dim);
+  background: rgba(252,96,17,0.08);
+  border: 0.5px solid rgba(252,96,17,0.2);
+  border-radius: 20px;
+  padding: 5px 14px;
+  margin-bottom: 32px;
+  text-transform: uppercase;
+}
+.hero h1 {
+  font-size: clamp(38px, 6vw, 68px);
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -2px;
+  margin-bottom: 24px;
+}
+.hero h1 em { font-style: normal; color: var(--orange); }
+.hero p {
+  font-size: 17px; line-height: 1.75;
+  color: var(--muted);
+  max-width: 600px; margin: 0 auto 40px;
+}
+.hero-stats {
+  display: flex; justify-content: center; gap: 48px;
+  border-top: 0.5px solid var(--border);
+  border-bottom: 0.5px solid var(--border);
+  padding: 28px 0; margin-bottom: 20px;
+}
+.hero-stat .num {
+  font-family: 'Syne', sans-serif;
+  font-size: 28px; font-weight: 700;
+  color: var(--orange);
+}
+.hero-stat .label {
+  font-size: 12px; color: var(--muted); margin-top: 4px;
+}
+
+/* ── SECTION ── */
+section {
+  max-width: 1000px; margin: 0 auto;
+  padding: 80px 40px;
+}
+.section-label {
+  font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase;
+  color: var(--orange-dim); font-weight: 500;
+  margin-bottom: 12px;
+}
+.section-title {
+  font-size: clamp(26px, 4vw, 38px);
+  font-weight: 700; letter-spacing: -1px;
+  margin-bottom: 16px; line-height: 1.15;
+}
+.section-sub {
+  font-size: 15px; color: var(--muted); line-height: 1.7;
+  max-width: 560px; margin-bottom: 48px;
+}
+
+/* ── MODULE CARDS ── */
+.modules { display: flex; flex-direction: column; gap: 0; }
+.module-card {
+  border: 0.5px solid var(--border);
+  border-radius: 16px;
+  background: var(--dark2);
+  padding: 0;
+  margin-bottom: 16px;
+  overflow: hidden;
+  transition: border-color 0.3s;
+}
+.module-card:hover { border-color: rgba(252,96,17,0.3); }
+.module-header {
+  display: flex; align-items: flex-start; gap: 20px;
+  padding: 28px 32px;
+  cursor: pointer;
+}
+.module-num {
+  width: 40px; height: 40px; border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Syne', sans-serif;
+  font-size: 16px; font-weight: 700;
+  flex-shrink: 0;
+}
+.m1 .module-num { background: rgba(30,158,117,0.15); color: var(--teal); }
+.m2 .module-num { background: rgba(252,96,17,0.12); color: var(--orange-dim); }
+.m3 .module-num { background: rgba(59,139,212,0.12); color: var(--blue); }
+.module-title-wrap { flex: 1; }
+.module-title { font-size: 18px; font-weight: 700; margin-bottom: 4px; letter-spacing: -0.3px; }
+.module-sub { font-size: 13px; color: var(--muted); line-height: 1.55; }
+.module-tags { display: flex; gap: 6px; margin-top: 10px; flex-wrap: wrap; }
+.tag {
+  font-size: 11px; font-weight: 500;
+  border-radius: 6px; padding: 3px 8px;
+}
+.tag-rural { background: rgba(30,158,117,0.12); color: #5DCAA5; }
+.tag-urban { background: rgba(59,139,212,0.1); color: #85B7EB; }
+.tag-mcp { background: rgba(252,96,17,0.1); color: var(--orange-dim); }
+.module-body { padding: 0 32px 28px 92px; }
+.feature-list { list-style: none; }
+.feature-list li {
+  font-size: 13px; color: var(--muted); line-height: 1.65;
+  padding: 8px 0; border-bottom: 0.5px solid var(--border);
+  display: flex; gap: 10px; align-items: flex-start;
+}
+.feature-list li:last-child { border-bottom: none; }
+.feature-list li::before {
+  content: "→";
+  color: var(--orange-dim); flex-shrink: 0; margin-top: 1px;
+}
+
+/* ── LIVE DEMO SECTION ── */
+.demo-wrap {
+  background: var(--dark2);
+  border: 0.5px solid var(--border);
+  border-radius: 20px;
+  overflow: hidden;
+}
+.demo-tabs {
+  display: flex; border-bottom: 0.5px solid var(--border);
+  overflow-x: auto;
+}
+.demo-tab {
+  padding: 14px 24px; font-size: 13px; font-weight: 500;
+  color: var(--muted); cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: all 0.2s; white-space: nowrap;
+  background: none; border-top: none; border-left: none; border-right: none;
+  border-bottom: 2px solid transparent;
+}
+.demo-tab.active { color: var(--orange); border-bottom-color: var(--orange); }
+.demo-panel { display: none; padding: 32px; }
+.demo-panel.active { display: block; }
+
+/* ── FUEL SENSE DEMO ── */
+.fuel-demo { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.fuel-input-group { display: flex; flex-direction: column; gap: 12px; }
+.fuel-label { font-size: 12px; color: var(--muted); letter-spacing: 0.5px; }
+.fuel-slider-wrap { display: flex; align-items: center; gap: 12px; }
+input[type=range] {
+  flex: 1; -webkit-appearance: none; height: 4px;
+  border-radius: 2px; background: var(--border);
+  outline: none;
+}
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none; width: 18px; height: 18px;
+  border-radius: 50%; background: var(--orange); cursor: pointer;
+}
+.slider-val {
+  font-family: 'Syne', sans-serif;
+  font-size: 15px; font-weight: 700;
+  min-width: 56px; text-align: right; color: var(--text);
+}
+.fuel-output {
+  background: var(--dark3);
+  border: 0.5px solid var(--border);
+  border-radius: 14px; padding: 24px;
+}
+.output-title { font-size: 11px; color: var(--muted); letter-spacing: 1px; margin-bottom: 16px; text-transform: uppercase; }
+.big-num { font-family: 'Syne', sans-serif; font-size: 38px; font-weight: 800; margin-bottom: 4px; }
+.big-num.green { color: var(--green); }
+.big-num.amber { color: var(--amber); }
+.big-num.red { color: var(--red); }
+.status-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 12px; font-weight: 500;
+  border-radius: 8px; padding: 5px 12px; margin-bottom: 16px;
+}
+.status-badge.ok { background: rgba(46,204,113,0.12); color: var(--green); }
+.status-badge.warn { background: rgba(240,165,0,0.12); color: var(--amber); }
+.status-badge.danger { background: rgba(231,76,60,0.12); color: var(--red); }
+.dot { width: 7px; height: 7px; border-radius: 50%; }
+.dot-green { background: var(--green); }
+.dot-amber { background: var(--amber); }
+.dot-red { background: var(--red); }
+.payout-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 0.5px solid var(--border); }
+.payout-row:last-child { border-bottom: none; }
+.payout-label { font-size: 12px; color: var(--muted); }
+.payout-val { font-size: 13px; font-weight: 500; }
+.voice-btn {
+  width: 100%; padding: 10px; margin-top: 14px;
+  background: rgba(252,96,17,0.1); border: 0.5px solid rgba(252,96,17,0.25);
+  border-radius: 10px; color: var(--orange-dim);
+  font-size: 12px; font-weight: 500; cursor: pointer;
+  transition: background 0.2s;
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+}
+.voice-btn:hover { background: rgba(252,96,17,0.18); }
+
+/* ── WEATHER DEMO ── */
+.weather-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px; }
+.weather-card {
+  background: var(--dark3); border: 0.5px solid var(--border);
+  border-radius: 12px; padding: 16px;
+  transition: border-color 0.3s;
+}
+.weather-card.selected { border-color: var(--orange); }
+.weather-icon { font-size: 28px; margin-bottom: 8px; }
+.weather-temp { font-family: 'Syne', sans-serif; font-size: 22px; font-weight: 700; }
+.weather-name { font-size: 12px; color: var(--muted); margin-top: 3px; }
+.weather-risk {
+  font-size: 11px; font-weight: 500; padding: 3px 8px;
+  border-radius: 6px; margin-top: 8px; display: inline-block;
+}
+.risk-low { background: rgba(46,204,113,0.1); color: var(--green); }
+.risk-med { background: rgba(240,165,0,0.1); color: var(--amber); }
+.risk-high { background: rgba(231,76,60,0.1); color: var(--red); }
+.suggestion-box {
+  background: var(--dark3); border: 0.5px solid var(--border);
+  border-radius: 14px; padding: 20px;
+}
+.sug-label { font-size: 11px; color: var(--muted); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 14px; }
+.sug-item { display: flex; align-items: center; gap: 12px; padding: 8px 0; border-bottom: 0.5px solid var(--border); }
+.sug-item:last-child { border-bottom: none; }
+.sug-icon { font-size: 20px; }
+.sug-name { font-size: 13px; }
+.sug-reason { font-size: 11px; color: var(--muted); }
+
+/* ── TRANSPARENCY DEMO ── */
+.fee-breakdown {
+  background: var(--dark3); border: 0.5px solid var(--border);
+  border-radius: 14px; padding: 24px;
+}
+.fee-row {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 10px 0; border-bottom: 0.5px solid var(--border);
+}
+.fee-row:last-child { border-bottom: none; padding-top: 14px; }
+.fee-name { font-size: 13px; color: var(--muted); }
+.fee-name.bold { color: var(--text); font-weight: 500; }
+.fee-amount { font-family: 'Syne', sans-serif; font-size: 14px; font-weight: 600; }
+.fee-amount.orange { color: var(--orange); }
+.fee-amount.green { color: var(--green); }
+.fee-amount.large { font-size: 20px; }
+.fuel-notice {
+  background: rgba(252,96,17,0.07); border: 0.5px solid rgba(252,96,17,0.2);
+  border-radius: 10px; padding: 12px 14px; margin-top: 16px;
+  font-size: 12px; color: var(--orange-dim); line-height: 1.6;
+}
+
+/* ── COMPLIANCE SECTION ── */
+.compliance-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.comp-item {
+  display: flex; align-items: flex-start; gap: 12px;
+  background: var(--dark2); border: 0.5px solid var(--border);
+  border-radius: 12px; padding: 14px;
+}
+.comp-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+.comp-text { font-size: 12px; color: var(--muted); line-height: 1.55; }
+.comp-text strong { color: var(--text); font-weight: 500; display: block; margin-bottom: 2px; }
+
+/* ── FOOTER ── */
+footer {
+  border-top: 0.5px solid var(--border);
+  padding: 40px;
+  display: flex; justify-content: space-between; align-items: center;
+  max-width: 1000px; margin: 0 auto;
+}
+.footer-brand { font-family: 'Syne', sans-serif; font-size: 16px; font-weight: 700; }
+.footer-brand span { color: var(--orange); }
+.footer-links { display: flex; gap: 24px; }
+.footer-links a { font-size: 12px; color: var(--muted); text-decoration: none; }
+.footer-links a:hover { color: var(--text); }
+
+/* ── SEPARATOR ── */
+.sep { height: 0.5px; background: var(--border); margin: 0 40px; }
+
+/* ── RIDER UI MOCKUP ── */
+.phone-frame {
+  width: 220px; flex-shrink: 0;
+  background: var(--dark3);
+  border: 0.5px solid var(--border);
+  border-radius: 28px; overflow: hidden;
+  padding: 0;
+}
+.phone-status {
+  background: #000; padding: 10px 16px 6px;
+  display: flex; justify-content: space-between;
+  font-size: 10px; color: rgba(255,255,255,0.5);
+}
+.phone-screen { padding: 14px; }
+.phone-header {
+  font-family: 'Syne', sans-serif; font-size: 14px; font-weight: 700;
+  margin-bottom: 12px; display: flex; align-items: center; justify-content: space-between;
+}
+.phone-alert {
+  border-radius: 10px; padding: 12px;
+  margin-bottom: 10px; font-size: 11px; line-height: 1.5;
+}
+.phone-alert.fuel {
+  background: rgba(252,96,17,0.12); border: 0.5px solid rgba(252,96,17,0.25);
+  color: var(--orange-dim);
+}
+.phone-alert.heat {
+  background: rgba(231,76,60,0.1); border: 0.5px solid rgba(231,76,60,0.2);
+  color: #E74C3C;
+}
+.phone-alert .alert-head { font-weight: 600; font-size: 12px; margin-bottom: 4px; }
+.phone-metric {
+  background: var(--dark2); border: 0.5px solid var(--border);
+  border-radius: 10px; padding: 10px 12px;
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 8px;
+}
+.pm-label { font-size: 10px; color: var(--muted); }
+.pm-val { font-family: 'Syne', sans-serif; font-size: 16px; font-weight: 700; }
+.pm-val.green { color: var(--green); }
+.phone-voice-btn {
+  width: 100%; padding: 10px;
+  background: var(--orange); border: none; border-radius: 10px;
+  color: #fff; font-size: 11px; font-weight: 600;
+  cursor: pointer; margin-top: 6px;
+}
+
+@media (max-width: 680px) {
+  nav { padding: 14px 20px; }
+  nav .links { display: none; }
+  .hero { padding: 60px 20px 60px; }
+  section { padding: 60px 20px; }
+  .hero-stats { gap: 24px; }
+  .fuel-demo, .weather-grid, .compliance-grid, .demo-flex { grid-template-columns: 1fr; }
+  footer { flex-direction: column; gap: 20px; text-align: center; }
+  .module-body { padding: 0 20px 24px 20px; }
+  .phone-frame { width: 100%; }
+}
+
+.demo-flex { display: flex; gap: 24px; align-items: flex-start; }
+.animate-in { animation: fadeUp 0.5s ease both; }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    Crisis<span>IQ</span>
+    <span class="nav-chip">Swiggy Builders Club</span>
+  </div>
+  <div class="links">
+    <a href="#crisis">The crisis</a>
+    <a href="#modules">Modules</a>
+    <a href="#demo">Live demo</a>
+    <a href="#compliance">Compliance</a>
+  </div>
+  <a class="nav-cta" href="https://forms.gle/4vkeKyqm15Qb6fnJA" target="_blank">Apply now ↗</a>
+</nav>
+
+<!-- HERO -->
+<div class="hero animate-in">
+  <div class="hero-eyebrow">⚡ Swiggy Builders Club — Developer Submission</div>
+  <h1>Stable delivery in an<br><em>unstable world</em></h1>
+  <p>An AI copilot that reads fuel prices, climate data, and commodity costs in real time — protecting Swiggy's riders, restaurant partners, and customers through the coming crisis years.</p>
+  <div class="hero-stats">
+    <div class="hero-stat">
+      <div class="num">3</div>
+      <div class="label">Linked modules</div>
+    </div>
+    <div class="hero-stat">
+      <div class="num">0</div>
+      <div class="label">Swiggy features duplicated</div>
+    </div>
+    <div class="hero-stat">
+      <div class="num">100%</div>
+      <div class="label">Open data sources</div>
+    </div>
+    <div class="hero-stat">
+      <div class="num">MCP</div>
+      <div class="label">Native API integration</div>
+    </div>
+  </div>
+</div>
+
+<div class="sep"></div>
+
+<!-- CRISIS CONTEXT -->
+<section id="crisis">
+  <div class="section-label">The problem</div>
+  <h2 class="section-title">Three crises converging on delivery economics</h2>
+  <p class="section-sub">By mid-2026, Swiggy faces simultaneous shocks to fuel costs, food ingredient prices, and rider safety from extreme heat — none of which its current systems address proactively.</p>
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+    <div style="background: var(--dark2); border: 0.5px solid var(--border); border-radius: 14px; padding: 22px;">
+      <div style="font-size: 28px; margin-bottom: 10px;">⛽</div>
+      <div style="font-family: 'Syne', sans-serif; font-size: 15px; font-weight: 700; margin-bottom: 6px;">Petrol price volatility</div>
+      <div style="font-size: 13px; color: var(--muted); line-height: 1.6;">Global supply shocks are pushing fuel costs up. Riders absorb this directly. Swiggy's existing BPCL fuel card is static — it doesn't adjust to real-time price spikes by PIN code or route distance.</div>
+    </div>
+    <div style="background: var(--dark2); border: 0.5px solid var(--border); border-radius: 14px; padding: 22px;">
+      <div style="font-size: 28px; margin-bottom: 10px;">🌡</div>
+      <div style="font-family: 'Syne', sans-serif; font-size: 15px; font-weight: 700; margin-bottom: 6px;">Super El Niño 2026–27</div>
+      <div style="font-size: 13px; color: var(--muted); line-height: 1.6;">WMO confirms 70%+ probability of a strong El Niño peaking in 2027. Heatwaves are already record-breaking. Riders face health crises in 42°C+ zones with no proactive system — only reactive cooling vests.</div>
+    </div>
+    <div style="background: var(--dark2); border: 0.5px solid var(--border); border-radius: 14px; padding: 22px;">
+      <div style="font-size: 28px; margin-bottom: 10px;">🍳</div>
+      <div style="font-family: 'Syne', sans-serif; font-size: 15px; font-weight: 700; margin-bottom: 6px;">LPG & cooking oil surge</div>
+      <div style="font-size: 13px; color: var(--muted); line-height: 1.6;">Restaurant input costs are rising sharply. Partners raise prices or silently reduce portions. Customers leave bad reviews not understanding why. Swiggy's margins and ratings both suffer.</div>
+    </div>
+    <div style="background: var(--dark2); border: 0.5px solid var(--border); border-radius: 14px; padding: 22px;">
+      <div style="font-size: 28px; margin-bottom: 10px;">🌧</div>
+      <div style="font-family: 'Syne', sans-serif; font-size: 15px; font-weight: 700; margin-bottom: 6px;">Erratic monsoon disruption</div>
+      <div style="font-size: 13px; color: var(--muted); line-height: 1.6;">El Niño brings drought in some zones, flash floods in others — particularly Karnataka, Andhra Pradesh, Maharashtra. Rural delivery routes become impassable with zero advance warning in the current system.</div>
+    </div>
+  </div>
+</section>
+
+<div class="sep"></div>
+
+<!-- MODULES -->
+<section id="modules">
+  <div class="section-label">The solution</div>
+  <h2 class="section-title">Three linked modules. One AI engine.</h2>
+  <p class="section-sub">CrisisIQ reads PPAC fuel prices, IMD climate data, and AGMARKNET commodity indices — all open government data — and surfaces decisions for riders, restaurants, and customers through Swiggy's MCP APIs.</p>
+
+  <div class="modules">
+
+    <!-- Module 1 -->
+    <div class="module-card m1">
+      <div class="module-header" onclick="toggleModule(1)">
+        <div class="module-num">01</div>
+        <div class="module-title-wrap">
+          <div class="module-title">FuelSense</div>
+          <div class="module-sub">Dynamic fuel-parity pay + climate safety for riders</div>
+          <div class="module-tags">
+            <span class="tag tag-rural">🏘 Rural</span>
+            <span class="tag tag-urban">🏙 Urban</span>
+            <span class="tag tag-mcp">MCP: rider earnings</span>
+          </div>
+        </div>
+      </div>
+      <div class="module-body" id="m1-body">
+        <ul class="feature-list">
+          <li>Reads live petrol prices by PIN code from PPAC government API. When fuel crosses a threshold, automatically adds a per-km fuel-parity top-up to rider payout — shown as a flame icon, not financial jargon.</li>
+          <li>Tracks ethanol-blend fuel (E20), cheaper in many rural areas. Riders using E20 bikes get a calibrated top-up rate — not the same flat rate as petrol riders. Prevents rural underpayment.</li>
+          <li>Heat index alert: when IMD temperature + humidity crosses a danger threshold, the app shows a rest-reminder and unlocks "heat break" status — rider pauses 15 min without losing incentive streak. Prevents heat stroke before it happens.</li>
+          <li>Monsoon route intelligence: in El Niño flood-prone zones (Andhra, Karnataka coasts), marks road segments impassable in real time. In drought zones where order volume drops, shows next predicted high-demand window.</li>
+          <li>Literacy-first UI: all alerts use colour (green/yellow/red), large icons, and a 5-second voice clip in local language (Telugu, Tamil, Hindi, Kannada, Bengali). Zero paragraph text in the rider alert layer.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Module 2 -->
+    <div class="module-card m2">
+      <div class="module-header" onclick="toggleModule(2)">
+        <div class="module-num">02</div>
+        <div class="module-title-wrap">
+          <div class="module-title">RestoCost Shield</div>
+          <div class="module-sub">Restaurant input cost intelligence + group buying</div>
+          <div class="module-tags">
+            <span class="tag tag-urban">🏙 Urban</span>
+            <span class="tag tag-rural">🏘 Tier-2 towns</span>
+            <span class="tag tag-mcp">MCP: restaurant menu data</span>
+          </div>
+        </div>
+      </div>
+      <div class="module-body" id="m2-body">
+        <ul class="feature-list">
+          <li>Aggregates wholesale price indices for cooking oil, LPG, and key ingredients from AGMARKNET (open data), mapped to each restaurant's primary cuisine type. A biryani place gets alerts about basmati + oil only.</li>
+          <li>Predicts price increases 2–4 weeks ahead using El Niño crop impact forecasts + commodity trend data. Restaurant gets a gentle nudge: "Cooking oil likely +18% in 3 weeks — consider a ₹15 buffer on rice dishes."</li>
+          <li>Portion-shrinkflation detector: if a restaurant's average order price is stable but customer ratings are dropping, the AI flags likely portion-reduction — preventing the silent quality decay that destroys long-term trust.</li>
+          <li>Group buy coordination: clusters nearby restaurant partners to unlock wholesale LPG and cooking oil pricing together. No existing delivery platform in India does this for restaurant partners. Inspired by BigBasket's B2B model, repurposed for food partners.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Module 3 -->
+    <div class="module-card m3">
+      <div class="module-header" onclick="toggleModule(3)">
+        <div class="module-num">03</div>
+        <div class="module-title-wrap">
+          <div class="module-title">AffordaMatch</div>
+          <div class="module-sub">Customer price transparency + climate-aware discovery</div>
+          <div class="module-tags">
+            <span class="tag tag-rural">🏘 Tier-2/3 cities</span>
+            <span class="tag tag-urban">🏙 Cost-aware urban</span>
+            <span class="tag tag-mcp">MCP: order + pricing data</span>
+          </div>
+        </div>
+      </div>
+      <div class="module-body" id="m3-body">
+        <ul class="feature-list">
+          <li>Fuel-adjusted delivery fee transparency: instead of a mysterious delivery charge, shows "Today's delivery fee includes ₹4 fuel cost." When fuel drops, shows "Fuel savings today: ₹3 off delivery." Customers understand volatility, stop blaming Swiggy for fee changes.</li>
+          <li>"Steady Price" restaurant badge: restaurants whose prices haven't inflated beyond the local CPI rate get a visible badge. The logic is disclosed to users — no dark pattern, no ranking manipulation. A transparent utility feature.</li>
+          <li>Weather-adaptive suggestions: on a 44°C day, surfaces cold beverages and cold meals as a utility feature — not a paid placement. On a monsoon day, surfaces comfort food. Behaviorally relevant, not manipulative.</li>
+          <li>Rural pre-scheduling: in areas with erratic road access from El Niño disruptions, lets customers pre-order for a future slot. Riders plan routes in advance. Restaurants prepare batch. Reduces no-delivery failures significantly in disrupted zones.</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="sep"></div>
+
+<!-- LIVE DEMO -->
+<section id="demo">
+  <div class="section-label">Interactive prototype</div>
+  <h2 class="section-title">See CrisisIQ in action</h2>
+  <p class="section-sub">These are working demos of the three modules — built with real calculation logic, not mock screenshots.</p>
+
+  <div class="demo-wrap">
+    <div class="demo-tabs">
+      <button class="demo-tab active" onclick="switchTab('fuelsense')">FuelSense — Rider</button>
+      <button class="demo-tab" onclick="switchTab('weather')">Climate alerts</button>
+      <button class="demo-tab" onclick="switchTab('transparency')">Fee transparency</button>
+    </div>
+
+    <!-- FUELSENSE TAB -->
+    <div class="demo-panel active" id="tab-fuelsense">
+      <div style="font-size: 12px; color: var(--muted); margin-bottom: 20px;">Adjust PIN code fuel price and temperature to see how CrisisIQ recalculates rider payout in real time.</div>
+      <div class="demo-flex">
+        <!-- Phone mockup -->
+        <div class="phone-frame">
+          <div class="phone-status">
+            <span>9:41</span><span>⚡ 87%</span>
+          </div>
+          <div class="phone-screen">
+            <div class="phone-header">
+              <span>CrisisIQ</span>
+              <span style="font-size: 10px; color: var(--orange-dim);">● Live</span>
+            </div>
+            <div class="phone-alert fuel" id="fuel-alert">
+              <div class="alert-head" id="fuel-alert-head">⛽ Fuel top-up active</div>
+              <span id="fuel-alert-body">Petrol at ₹105/L in your zone. ₹2.4 added per km today.</span>
+            </div>
+            <div class="phone-alert heat" id="heat-alert" style="display:none">
+              <div class="alert-head">🌡 Heat break unlocked</div>
+              15-min rest. Streak protected.
+            </div>
+            <div class="phone-metric">
+              <div>
+                <div class="pm-label">Today's top-up</div>
+                <div class="pm-val green" id="topup-display">+₹2.4/km</div>
+              </div>
+              <div style="text-align:right">
+                <div class="pm-label">Fuel zone</div>
+                <div style="font-size:12px; color: var(--muted);" id="zone-display">Zone B</div>
+              </div>
+            </div>
+            <div class="phone-metric">
+              <div>
+                <div class="pm-label">Heat index</div>
+                <div class="pm-val" id="heat-display" style="color: var(--amber)">38°C</div>
+              </div>
+              <div style="text-align:right">
+                <div class="pm-label">Status</div>
+                <div style="font-size:12px;" id="heat-status" class="tag risk-med">Caution</div>
+              </div>
+            </div>
+            <button class="phone-voice-btn" onclick="playVoice()">🔊 Telugu audio alert</button>
+          </div>
+        </div>
+
+        <!-- Controls -->
+        <div style="flex:1">
+          <div class="fuel-input-group">
+            <div>
+              <div class="fuel-label">LOCAL PETROL PRICE (₹/LITRE)</div>
+              <div class="fuel-slider-wrap" style="margin-top:8px">
+                <input type="range" min="90" max="140" value="105" step="1" id="fuel-price" oninput="updateFuel()">
+                <span class="slider-val" id="fuel-price-display">₹105</span>
+              </div>
+            </div>
+            <div>
+              <div class="fuel-label">TEMPERATURE (°C)</div>
+              <div class="fuel-slider-wrap" style="margin-top:8px">
+                <input type="range" min="22" max="48" value="38" step="1" id="temp-input" oninput="updateFuel()">
+                <span class="slider-val" id="temp-display">38°C</span>
+              </div>
+            </div>
+            <div>
+              <div class="fuel-label">DELIVERY DISTANCE (KM)</div>
+              <div class="fuel-slider-wrap" style="margin-top:8px">
+                <input type="range" min="1" max="12" value="5" step="1" id="dist-input" oninput="updateFuel()">
+                <span class="slider-val" id="dist-display">5 km</span>
+              </div>
+            </div>
+          </div>
+          <div class="fuel-output" style="margin-top:20px">
+            <div class="output-title">Payout breakdown — this delivery</div>
+            <div class="payout-row">
+              <span class="payout-label">Base pay</span>
+              <span class="payout-val">₹<span id="base-pay">35</span></span>
+            </div>
+            <div class="payout-row">
+              <span class="payout-label">Distance pay</span>
+              <span class="payout-val">₹<span id="dist-pay">25</span></span>
+            </div>
+            <div class="payout-row">
+              <span class="payout-label" style="color: var(--orange-dim);">⛽ Fuel parity top-up</span>
+              <span class="payout-val" style="color: var(--orange-dim);">+₹<span id="fuel-topup">12</span></span>
+            </div>
+            <div class="payout-row">
+              <span class="payout-label" id="heat-bonus-label" style="color: var(--amber);">🌡 Heat bonus</span>
+              <span class="payout-val" style="color: var(--amber);">+₹<span id="heat-bonus">0</span></span>
+            </div>
+            <div class="payout-row" style="border-top: 0.5px solid var(--border); margin-top: 4px;">
+              <span class="payout-label" style="color: var(--text); font-weight: 500;">Total this delivery</span>
+              <span class="payout-val" style="font-size:18px; font-family:'Syne',sans-serif; color: var(--green);">₹<span id="total-pay">72</span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- WEATHER TAB -->
+    <div class="demo-panel" id="tab-weather">
+      <div style="font-size: 12px; color: var(--muted); margin-bottom: 20px;">Click a weather scenario to see how CrisisIQ adapts customer discovery and rider routing.</div>
+      <div class="weather-grid">
+        <div class="weather-card selected" onclick="setWeather('heat')" id="w-heat">
+          <div class="weather-icon">🔥</div>
+          <div class="weather-temp">44°C</div>
+          <div class="weather-name">Extreme heat — Hyderabad</div>
+          <div class="weather-risk risk-high">High risk</div>
+        </div>
+        <div class="weather-card" onclick="setWeather('rain')" id="w-rain">
+          <div class="weather-icon">🌧</div>
+          <div class="weather-temp">26°C</div>
+          <div class="weather-name">Heavy monsoon — Coastal AP</div>
+          <div class="weather-risk risk-med">Route disruption</div>
+        </div>
+        <div class="weather-card" onclick="setWeather('drought')" id="w-drought">
+          <div class="weather-icon">🏜</div>
+          <div class="weather-temp">41°C</div>
+          <div class="weather-name">El Niño drought — Marathwada</div>
+          <div class="weather-risk risk-med">Low order volume</div>
+        </div>
+        <div class="weather-card" onclick="setWeather('normal')" id="w-normal">
+          <div class="weather-icon">🌤</div>
+          <div class="weather-temp">28°C</div>
+          <div class="weather-name">Normal — Pune</div>
+          <div class="weather-risk risk-low">Normal ops</div>
+        </div>
+      </div>
+      <div class="suggestion-box">
+        <div class="sug-label" id="sug-title">Customer discovery — extreme heat mode</div>
+        <div id="sug-items"></div>
+      </div>
+    </div>
+
+    <!-- TRANSPARENCY TAB -->
+    <div class="demo-panel" id="tab-transparency">
+      <div style="font-size: 12px; color: var(--muted); margin-bottom: 20px;">This is what the customer sees instead of a mysterious "delivery fee." Full fuel-cost transparency builds trust.</div>
+      <div class="demo-flex">
+        <div style="flex:1">
+          <div style="font-size: 13px; color: var(--muted); margin-bottom: 12px;">Drag to simulate fuel price change:</div>
+          <div class="fuel-slider-wrap" style="margin-bottom:20px">
+            <span style="font-size:12px; color:var(--muted);">₹90</span>
+            <input type="range" min="90" max="140" value="108" step="1" id="fee-fuel" oninput="updateFee()" style="flex:1">
+            <span style="font-size:12px; color:var(--muted);">₹140</span>
+          </div>
+          <div class="fee-breakdown">
+            <div style="font-family:'Syne',sans-serif; font-size:13px; font-weight:700; margin-bottom:14px; color: var(--muted);">Your delivery fee breakdown</div>
+            <div class="fee-row">
+              <span class="fee-name">Base delivery charge</span>
+              <span class="fee-amount">₹20</span>
+            </div>
+            <div class="fee-row">
+              <span class="fee-name">Distance component (4.2 km)</span>
+              <span class="fee-amount">₹<span id="dist-component">16</span></span>
+            </div>
+            <div class="fee-row">
+              <span class="fee-name" style="color: var(--orange-dim);">⛽ Fuel cost today (₹<span id="fuel-rate-show">108</span>/L)</span>
+              <span class="fee-amount orange">₹<span id="fuel-component">8</span></span>
+            </div>
+            <div class="fee-row">
+              <span class="fee-name bold">Total delivery fee</span>
+              <span class="fee-amount large orange">₹<span id="total-fee">44</span></span>
+            </div>
+          </div>
+          <div class="fuel-notice" id="fuel-notice">
+            Fuel prices are <strong id="fuel-direction">above normal</strong> in your area today. ₹<span id="fuel-diff">8</span> of your delivery fee is the current fuel cost component. This updates daily based on local PPAC data.
+          </div>
+        </div>
+        <div style="width:1px; background: var(--border);"></div>
+        <div style="flex:0.8">
+          <div style="font-size:12px; color:var(--muted); margin-bottom:14px; letter-spacing:0.5px; text-transform:uppercase;">What changes with this feature</div>
+          <div style="display:flex; flex-direction:column; gap:10px;">
+            <div style="display:flex; gap:10px; align-items:flex-start; font-size:13px; color:var(--muted);">
+              <span style="color:var(--green); flex-shrink:0">✓</span> Customers stop blaming Swiggy for volatile fees — they understand it's fuel cost
+            </div>
+            <div style="display:flex; gap:10px; align-items:flex-start; font-size:13px; color:var(--muted);">
+              <span style="color:var(--green); flex-shrink:0">✓</span> When fuel drops, customers see their savings — creates positive brand moment
+            </div>
+            <div style="display:flex; gap:10px; align-items:flex-start; font-size:13px; color:var(--muted);">
+              <span style="color:var(--green); flex-shrink:0">✓</span> Full compliance with MCP rule: no misrepresentation of prices or delivery times
+            </div>
+            <div style="display:flex; gap:10px; align-items:flex-start; font-size:13px; color:var(--muted);">
+              <span style="color:var(--green); flex-shrink:0">✓</span> No dark patterns — logic is fully disclosed to the user in plain language
+            </div>
+            <div style="display:flex; gap:10px; align-items:flex-start; font-size:13px; color:var(--muted);">
+              <span style="color:var(--red); flex-shrink:0">✗</span> Not manipulating order flow or ranking — purely informational transparency layer
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="sep"></div>
+
+<!-- COMPLIANCE -->
+<section id="compliance">
+  <div class="section-label">MCP compliance</div>
+  <h2 class="section-title">Built within every boundary</h2>
+  <p class="section-sub">Every feature was designed against Swiggy's Builders Club rules. Here's how CrisisIQ maps to each requirement.</p>
+  <div class="compliance-grid">
+    <div class="comp-item">
+      <div class="comp-icon">✅</div>
+      <div class="comp-text"><strong>Makes ordering better for users</strong>Fee transparency, climate-aware discovery, and pre-scheduling directly improve the customer experience.</div>
+    </div>
+    <div class="comp-item">
+      <div class="comp-icon">✅</div>
+      <div class="comp-text"><strong>AI copilot using MCP workflows</strong>Reads rider earnings, menu prices, and order data through MCP APIs. External data from open government sources only.</div>
+    </div>
+    <div class="comp-item">
+      <div class="comp-icon">✅</div>
+      <div class="comp-text"><strong>No price misrepresentation</strong>AffordaMatch discloses its logic to users. The "Steady Price" badge methodology is transparent — CPI-based, not subjective.</div>
+    </div>
+    <div class="comp-item">
+      <div class="comp-icon">✅</div>
+      <div class="comp-text"><strong>No ranking manipulation</strong>Weather-adaptive food suggestions are labeled as a utility feature. No paid placement, no opaque ranking changes.</div>
+    </div>
+    <div class="comp-item">
+      <div class="comp-icon">✅</div>
+      <div class="comp-text"><strong>No data harvesting beyond scope</strong>Only order history, menu prices, and rider earnings — all within agreed MCP scope. No competitor data, no scraping.</div>
+    </div>
+    <div class="comp-item">
+      <div class="comp-icon">✅</div>
+      <div class="comp-text"><strong>No dark patterns or deceptive UX</strong>Every feature discloses its source and logic. Voice alerts in local languages are purely for accessibility, not manipulation.</div>
+    </div>
+    <div class="comp-item">
+      <div class="comp-icon">✅</div>
+      <div class="comp-text"><strong>Swiggy brand respected</strong>CrisisIQ is a layer on top of Swiggy — it never hides Swiggy's identity or confuses users about the platform they're on.</div>
+    </div>
+    <div class="comp-item">
+      <div class="comp-icon">✅</div>
+      <div class="comp-text"><strong>Commercial partnership framing</strong>Swiggy benefits from rider retention, restaurant loyalty, and customer trust. CrisisIQ benefits from MCP access. Both sides win.</div>
+    </div>
+  </div>
+</section>
+
+<div class="sep"></div>
+
+<!-- DATA SOURCES -->
+<section>
+  <div class="section-label">Data sources</div>
+  <h2 class="section-title">Open government data only</h2>
+  <p class="section-sub">No scraping. No competitor intelligence. All external data is from Indian government open data portals with no copyright restrictions.</p>
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px;">
+    <div style="background: var(--dark2); border: 0.5px solid var(--border); border-radius: 12px; padding: 16px;">
+      <div style="font-size: 11px; color: var(--muted); letter-spacing: 1px; margin-bottom: 8px;">FUEL PRICES</div>
+      <div style="font-size: 14px; font-weight: 500;">PPAC India</div>
+      <div style="font-size: 12px; color: var(--muted); margin-top: 4px;">Petroleum Planning & Analysis Cell — daily retail prices by city</div>
+    </div>
+    <div style="background: var(--dark2); border: 0.5px solid var(--border); border-radius: 12px; padding: 16px;">
+      <div style="font-size: 11px; color: var(--muted); letter-spacing: 1px; margin-bottom: 8px;">WEATHER + HEAT</div>
+      <div style="font-size: 14px; font-weight: 500;">IMD API</div>
+      <div style="font-size: 12px; color: var(--muted); margin-top: 4px;">India Meteorological Department — real-time temperature, humidity, rainfall</div>
+    </div>
+    <div style="background: var(--dark2); border: 0.5px solid var(--border); border-radius: 12px; padding: 16px;">
+      <div style="font-size: 11px; color: var(--muted); letter-spacing: 1px; margin-bottom: 8px;">COMMODITY PRICES</div>
+      <div style="font-size: 14px; font-weight: 500;">AGMARKNET</div>
+      <div style="font-size: 12px; color: var(--muted); margin-top: 4px;">Ministry of Agriculture — wholesale prices for LPG, cooking oil, grains</div>
+    </div>
+    <div style="background: var(--dark2); border: 0.5px solid var(--border); border-radius: 12px; padding: 16px;">
+      <div style="font-size: 11px; color: var(--muted); letter-spacing: 1px; margin-bottom: 8px;">INFLATION INDEX</div>
+      <div style="font-size: 14px; font-weight: 500;">MOSPI CPI</div>
+      <div style="font-size: 12px; color: var(--muted); margin-top: 4px;">Ministry of Statistics — Consumer Price Index for "Steady Price" badge logic</div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<div class="sep"></div>
+<footer>
+  <div>
+    <div class="footer-brand">Crisis<span>IQ</span></div>
+    <div style="font-size: 12px; color: var(--muted); margin-top: 4px;">A Swiggy Builders Club submission · May 2026</div>
+  </div>
+  <div class="footer-links">
+    <a href="https://mcp.swiggy.com/builders/">Builders Club</a>
+    <a href="https://forms.gle/4vkeKyqm15Qb6fnJA">Apply as Developer</a>
+    <a href="mailto:builders@swiggy.in">Contact Swiggy</a>
+  </div>
+</footer>
+
+<script>
+function toggleModule(n) {
+  const b = document.getElementById('m' + n + '-body');
+  b.style.display = b.style.display === 'none' ? 'block' : 'none';
+}
+
+function switchTab(name) {
+  document.querySelectorAll('.demo-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.demo-panel').forEach(p => p.classList.remove('active'));
+  event.target.classList.add('active');
+  document.getElementById('tab-' + name).classList.add('active');
+}
+
+function updateFuel() {
+  const price = parseInt(document.getElementById('fuel-price').value);
+  const temp = parseInt(document.getElementById('temp-input').value);
+  const dist = parseInt(document.getElementById('dist-input').value);
+
+  document.getElementById('fuel-price-display').textContent = '₹' + price;
+  document.getElementById('temp-display').textContent = temp + '°C';
+  document.getElementById('dist-display').textContent = dist + ' km';
+
+  const baseFuel = 95;
+  const extra = Math.max(0, price - baseFuel);
+  const topupPerKm = parseFloat((extra * 0.08).toFixed(1));
+  const fuelTopup = Math.round(topupPerKm * dist);
+
+  let zone = 'Zone A';
+  if (price > 105) zone = 'Zone B';
+  if (price > 115) zone = 'Zone C';
+  if (price > 125) zone = 'Zone D';
+
+  document.getElementById('zone-display').textContent = zone;
+  document.getElementById('topup-display').textContent = '+₹' + topupPerKm + '/km';
+
+  const base = 35;
+  const distPay = Math.round(dist * 5);
+  let heatBonus = 0;
+  let heatColor = 'var(--green)';
+  let heatStatus = 'Safe';
+  let heatClass = 'risk-low';
+
+  if (temp >= 45) {
+    heatBonus = 20; heatColor = 'var(--red)';
+    heatStatus = 'Danger'; heatClass = 'risk-high';
+    document.getElementById('heat-alert').style.display = 'block';
+  } else if (temp >= 40) {
+    heatBonus = 12; heatColor = 'var(--red)';
+    heatStatus = 'Danger'; heatClass = 'risk-high';
+    document.getElementById('heat-alert').style.display = 'block';
+  } else if (temp >= 36) {
+    heatBonus = 6; heatColor = 'var(--amber)';
+    heatStatus = 'Caution'; heatClass = 'risk-med';
+    document.getElementById('heat-alert').style.display = 'none';
+  } else {
+    heatBonus = 0; heatColor = 'var(--green)';
+    heatStatus = 'Safe'; heatClass = 'risk-low';
+    document.getElementById('heat-alert').style.display = 'none';
+  }
+
+  const total = base + distPay + fuelTopup + heatBonus;
+
+  document.getElementById('base-pay').textContent = base;
+  document.getElementById('dist-pay').textContent = distPay;
+  document.getElementById('fuel-topup').textContent = fuelTopup;
+  document.getElementById('heat-bonus').textContent = heatBonus;
+  document.getElementById('total-pay').textContent = total;
+  document.getElementById('heat-display').textContent = temp + '°C';
+  document.getElementById('heat-display').style.color = heatColor;
+  const hs = document.getElementById('heat-status');
+  hs.textContent = heatStatus;
+  hs.className = 'tag ' + heatClass;
+
+  if (fuelTopup > 0) {
+    document.getElementById('fuel-alert').style.display = 'block';
+    document.getElementById('fuel-alert-head').textContent = '⛽ Fuel top-up active';
+    document.getElementById('fuel-alert-body').textContent = 'Petrol at ₹' + price + '/L in your zone. ₹' + topupPerKm + ' added per km today.';
+  } else {
+    document.getElementById('fuel-alert').style.display = 'none';
+  }
+}
+
+const weatherData = {
+  heat: {
+    title: 'Customer discovery — extreme heat (44°C, Hyderabad)',
+    items: [
+      { icon: '🧊', name: 'Cold brew & iced coffees', reason: 'Surfaced first — heat utility feature' },
+      { icon: '🍦', name: 'Ice cream & frozen desserts', reason: 'Category boosted automatically' },
+      { icon: '🥗', name: 'Cold salads & chilled bowls', reason: 'Lighter meals in extreme heat' },
+      { icon: '💧', name: 'Electrolyte drinks & juices', reason: 'Hydration priority alert' },
+    ]
+  },
+  rain: {
+    title: 'Customer discovery — heavy monsoon (coastal Andhra)',
+    items: [
+      { icon: '🍜', name: 'Hot soups & noodles', reason: 'Comfort food — monsoon mode' },
+      { icon: '☕', name: 'Hot teas & filter coffee', reason: 'Warm beverages surfaced' },
+      { icon: '🥘', name: 'Curries & rice meals', reason: 'Hearty comfort food' },
+      { icon: '⚠️', name: 'Route delay notice shown', reason: '3 roads marked impassable — 35 min ETA' },
+    ]
+  },
+  drought: {
+    title: 'Rider view — El Niño drought zone (Marathwada)',
+    items: [
+      { icon: '📉', name: 'Low order volume warning', reason: 'Crop failure reducing rural spend' },
+      { icon: '🕐', name: 'Next peak window: 7–9pm', reason: 'Shift planning intelligence shown' },
+      { icon: '🛵', name: 'Neighbouring zone suggested', reason: '+8 km radius — higher demand' },
+      { icon: '💰', name: 'Drought area bonus active', reason: '₹8 extra per delivery this week' },
+    ]
+  },
+  normal: {
+    title: 'Normal operations — standard discovery (Pune)',
+    items: [
+      { icon: '🍕', name: 'Standard discovery — no overrides', reason: 'Normal personalisation active' },
+      { icon: '⛽', name: 'Fuel parity top-up: ₹0', reason: 'Fuel at baseline — no surcharge' },
+      { icon: '🌡', name: 'Heat index: safe (28°C)', reason: 'No heat alerts triggered' },
+      { icon: '✅', name: 'All routes clear', reason: 'No weather disruptions in zone' },
+    ]
+  }
+};
+
+function setWeather(type) {
+  document.querySelectorAll('.weather-card').forEach(c => c.classList.remove('selected'));
+  document.getElementById('w-' + type).classList.add('selected');
+  const d = weatherData[type];
+  document.getElementById('sug-title').textContent = d.title;
+  document.getElementById('sug-items').innerHTML = d.items.map(i => `
+    <div class="sug-item">
+      <div class="sug-icon">${i.icon}</div>
+      <div>
+        <div class="sug-name">${i.name}</div>
+        <div class="sug-reason">${i.reason}</div>
+      </div>
+    </div>
+  `).join('');
+}
+setWeather('heat');
+
+function updateFee() {
+  const price = parseInt(document.getElementById('fee-fuel').value);
+  const baseFuel = 95;
+  const fuelComp = Math.round(4 + ((price - baseFuel) * 0.15));
+  const distComp = 16;
+  const total = 20 + distComp + fuelComp;
+  const diff = Math.abs(price - baseFuel);
+  const direction = price > baseFuel ? 'above normal' : price < baseFuel ? 'below normal' : 'at normal';
+
+  document.getElementById('fuel-rate-show').textContent = price;
+  document.getElementById('fuel-component').textContent = fuelComp;
+  document.getElementById('total-fee').textContent = total;
+  document.getElementById('fuel-diff').textContent = fuelComp;
+  document.getElementById('fuel-direction').textContent = direction;
+}
+
+function playVoice() {
+  const btn = event.target;
+  btn.textContent = '🔊 Playing Telugu alert...';
+  setTimeout(() => { btn.textContent = '🔊 Telugu audio alert'; }, 2000);
+  if ('speechSynthesis' in window) {
+    const u = new SpeechSynthesisUtterance('అప్రమత్తంగా ఉండండి. ఇప్పుడు ఇంధన ధర అధికంగా ఉంది. మీకు ప్రతి కిలోమీటరుకు అదనపు చెల్లింపు అందుతుంది.');
+    u.lang = 'te-IN'; u.rate = 0.9;
+    window.speechSynthesis.speak(u);
+  }
+}
+
+updateFuel();
+updateFee();
+</script>
+</body>
+</html>
