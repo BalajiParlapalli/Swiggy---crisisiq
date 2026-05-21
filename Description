@@ -1,0 +1,9 @@
+India's food delivery ecosystem is about to face three simultaneous shocks - rising petrol prices,
+the 2026–27 Super El Niño bringing record heatwaves and erratic monsoons, and surging LPG and cooking oil costs hitting restaurant partners. 
+None of Swiggy's current systems read these external economic signals and act on them proactively.
+CrisisIQ is an AI informational layer built on Swiggy's MCP platform that serves three audiences through three separate modules.
+Riders get quarterly bike servicing vouchers when the PPAC fuel quarterly average crosses ₹10 above the baseline - simple, predictable, no per-delivery math.
+Restaurant partners get 3–4 week commodity cost forecasts from AGMARKNET data, a private shrinkflation monitor, and opt-in group buying coordination.
+Customers get a tap-to-expand breakdown of what already exists inside their delivery charges - no new fees, just honest transparency.
+The project was designed compliance-first against Swiggy's Builders Club published rules - zero new charges, zero ranking changes, zero dark patterns,
+with every prohibited conduct rule mapped explicitly. External data comes entirely from open Indian government APIs: PPAC for fuel, IMD for climate, AGMARKNET for commodities.
